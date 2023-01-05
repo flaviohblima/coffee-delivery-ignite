@@ -16,7 +16,7 @@ export const Header: React.FC = () => {
 
       <nav>
         <IconButton
-          variant="secondary"
+          variant="secondary-light"
           icon={<MapPin size={24} weight="fill" />}
           text={'São Paulo, SP'}
         />

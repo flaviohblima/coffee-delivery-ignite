@@ -23,6 +23,7 @@ export const ProductsPageContainer = styled.main`
 
 export const SynopsisSection = styled.section`
   display: flex;
+  flex-wrap: wrap;
   gap: 3.5rem;
 
   & > div {
@@ -53,9 +54,8 @@ export const SynopsisSection = styled.section`
   }
 
   img {
-    width: 29.75rem;
-    height: auto;
-    flex: 0 0 auto;
+    width: auto;
+    height: 22.5rem;
   }
 `
 

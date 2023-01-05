@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components'
 
-export type IconButtonVariant = 'primary' | 'secondary' | 'default'
+export type IconButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'secondary-light'
+  | 'default'
 
 interface IconButtonContainerProps {
   variant: IconButtonVariant
@@ -16,6 +20,12 @@ const buttonColors = {
     background: 'purple-dark',
     color: 'white',
     iconColor: 'white',
+  },
+  'secondary-light': {
+    background: 'purple-light',
+    border: 'purple-light',
+    color: 'purple',
+    iconColor: 'purple',
   },
   default: {
     background: 'base-button',
@@ -36,6 +46,12 @@ const buttonColorsHover = {
     border: 'purple',
     color: 'white',
     iconColor: 'white',
+  },
+  'secondary-light': {
+    background: 'purple-light',
+    border: 'purple-dark',
+    color: 'purple-dark',
+    iconColor: 'purple-dark',
   },
   default: {
     background: 'base-hover',
@@ -58,7 +74,7 @@ export const IconButtonContainer = styled.button<IconButtonContainerProps>`
 
   cursor: pointer;
 
-  transition: all 100ms ease-in-out;
+  transition: all 100ms ease-in;
 
   border: solid 1px transparent;
 
