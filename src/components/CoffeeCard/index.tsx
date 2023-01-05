@@ -1,5 +1,7 @@
+import { ShoppingCart } from 'phosphor-react'
 import React from 'react'
-import { CoffeeCardContainer } from './styles'
+import { IconButton } from '../IconButton'
+import { CoffeeCardContainer, CountContainer } from './styles'
 
 interface CoffeeCardProps {
   type: string
@@ -40,8 +42,15 @@ export const CoffeeCard: React.FC<CoffeeCardProps> = ({
         </span>
 
         <div>
-          <div>add</div>
-          <div>cart</div>
+          <CountContainer>
+            <button>-</button>
+            <p>{0}</p>
+            <button>+</button>
+          </CountContainer>
+          <IconButton
+            variant="secondary"
+            icon={<ShoppingCart size={22} weight="fill" />}
+          />
         </div>
       </div>
     </CoffeeCardContainer>

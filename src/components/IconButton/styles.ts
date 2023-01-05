@@ -13,7 +13,7 @@ const buttonColors = {
     iconColor: 'yellow-dark',
   },
   secondary: {
-    background: 'purple',
+    background: 'purple-dark',
     color: 'white',
     iconColor: 'white',
   },
@@ -32,8 +32,8 @@ const buttonColorsHover = {
     iconColor: 'yellow-dark',
   },
   secondary: {
-    background: 'purple-dark',
-    border: 'purple-dark',
+    background: 'purple',
+    border: 'purple',
     color: 'white',
     iconColor: 'white',
   },

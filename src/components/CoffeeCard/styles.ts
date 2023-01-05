@@ -56,7 +56,7 @@ export const CoffeeCardContainer = styled.li`
     color: ${(props) => props.theme['base-label']};
   }
 
-  div {
+  & > div {
     padding: 0 0.25rem;
     width: 100%;
     display: flex;
@@ -79,11 +79,44 @@ export const CoffeeCardContainer = styled.li`
       }
     }
 
-    div {
+    & > div {
       width: auto;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+    }
+  }
+`
+
+export const CountContainer = styled.div`
+  height: 2.625rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.625rem;
+
+  background: ${(props) => props.theme['base-button']};
+
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  p {
+    margin-bottom: -0.125rem;
+    font-size: 1rem;
+    color: ${(props) => props.theme['base-text']};
+  }
+
+  button {
+    height: 1.25rem;
+    width: 1.25rem;
+    border: none;
+    background: transparent;
+    color: ${(props) => props.theme.purple};
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      color: ${(props) => props.theme['purple-dark']};
     }
   }
 `
