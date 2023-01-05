@@ -58,3 +58,20 @@ export const SynopsisSection = styled.section`
     flex: 0 0 auto;
   }
 `
+
+export const CoffeeListSection = styled.section`
+  h2 {
+    margin-bottom: 3.5rem;
+    font-family: 'Baloo 2';
+    font-size: 2rem;
+    line-height: 130%;
+    font-weight: 800;
+    color: ${(props) => props.theme['base-subtitle']};
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem 2rem;
+  }
+`

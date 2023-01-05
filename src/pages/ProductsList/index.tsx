@@ -1,13 +1,21 @@
-import React from 'react'
-import { ProductsPageContainer, SynopsisSection } from './styles'
+import React, { useContext } from 'react'
+import {
+  CoffeeListSection,
+  ProductsPageContainer,
+  SynopsisSection,
+} from './styles'
 
 import BackgroundSVG from '../../assets/Background.svg'
 import HomeImage from '../../assets/HomeImage.png'
 import { IconTextListItem } from '../../components/HomeListItem'
 
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
+import { CoffeeCard } from '../../components/CoffeeCard'
+import { CoffeeListContext } from '../../contexts/CoffeeList'
 
 export const ProductsList: React.FC = () => {
+  const { coffeeList } = useContext(CoffeeListContext)
+
   return (
     <ProductsPageContainer>
       <img src={BackgroundSVG} alt="" />
@@ -63,95 +71,14 @@ export const ProductsList: React.FC = () => {
         />
       </SynopsisSection>
 
-      <section>
+      <CoffeeListSection>
         <h2>Nossos Cafés</h2>
         <ul>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
-          <li>
-            <div>Espresso Tradicional</div>
-          </li>
+          {coffeeList.map((coffee) => (
+            <CoffeeCard key={coffee.type} {...coffee} />
+          ))}
         </ul>
-      </section>
+      </CoffeeListSection>
     </ProductsPageContainer>
   )
 }
