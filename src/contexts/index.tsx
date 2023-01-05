@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react'
+import { CartContextProvider } from './Cart'
 import { CoffeeListProvider } from './CoffeeList'
 
 interface AppProvidersProps {
@@ -6,5 +7,9 @@ interface AppProvidersProps {
 }
 
 export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
-  return <CoffeeListProvider>{children}</CoffeeListProvider>
+  return (
+    <CartContextProvider>
+      <CoffeeListProvider>{children}</CoffeeListProvider>
+    </CartContextProvider>
+  )
 }

@@ -1,5 +1,6 @@
 import { ShoppingCart } from 'phosphor-react'
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import { CartContext } from '../../contexts/Cart'
 import { IconButton } from '../IconButton'
 import { CoffeeCardContainer, CountContainer } from './styles'
 
@@ -20,6 +21,21 @@ export const CoffeeCard: React.FC<CoffeeCardProps> = ({
   name,
   tags,
 }) => {
+  const { addCoffeeToCart } = useContext(CartContext)
+
+  const [quantity, setQuantity] = useState(0)
+
+  const handleAddCoffeeToCard = () => {
+    addCoffeeToCart(type, quantity)
+    setQuantity(0)
+  }
+
+  const handleSubtractOneCoffee = () => {
+    setQuantity((oldQuantity) => (oldQuantity ? oldQuantity - 1 : 0))
+  }
+  const handleSumOneCoffee = () => {
+    setQuantity((oldQuantity) => oldQuantity + 1)
+  }
   return (
     <CoffeeCardContainer>
       <img src={image} alt="" />
@@ -43,13 +59,14 @@ export const CoffeeCard: React.FC<CoffeeCardProps> = ({
 
         <div>
           <CountContainer>
-            <button>-</button>
-            <p>{0}</p>
-            <button>+</button>
+            <button onClick={handleSubtractOneCoffee}>-</button>
+            <p>{quantity}</p>
+            <button onClick={handleSumOneCoffee}>+</button>
           </CountContainer>
           <IconButton
             variant="secondary"
             icon={<ShoppingCart size={22} weight="fill" />}
+            onClick={handleAddCoffeeToCard}
           />
         </div>
       </div>

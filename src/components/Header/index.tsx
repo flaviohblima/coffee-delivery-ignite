@@ -1,13 +1,21 @@
 import { MapPin, ShoppingCart } from 'phosphor-react'
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import logoSVG from '../../assets/Logo.svg'
+import { CartContext } from '../../contexts/Cart'
 import { IconButton } from '../IconButton'
 import { NumberIndicator } from '../NumberIndicator'
 import { HeaderContainer } from './styles'
 
 export const Header: React.FC = () => {
+  const { coffees } = useContext(CartContext)
+
+  const numberOfItensInCart = coffees.reduce(
+    (sum, coffee) => sum + coffee.quantity,
+    0,
+  )
+
   return (
     <HeaderContainer>
       <NavLink to="/" id="home-navlink">
@@ -22,7 +30,7 @@ export const Header: React.FC = () => {
         />
 
         <NavLink to="/cart" id="cart-navlink">
-          <NumberIndicator number={3} variant="primary">
+          <NumberIndicator number={numberOfItensInCart} variant="primary">
             <IconButton
               variant="primary"
               icon={<ShoppingCart size={24} weight="fill" />}
