@@ -1,23 +1,19 @@
 import React, { useContext } from 'react'
-import {
-  CoffeeListSection,
-  ProductsPageContainer,
-  SynopsisSection,
-} from './styles'
+import { CoffeeListSection, HomeContainer, SynopsisSection } from './styles'
 
 import BackgroundSVG from '../../assets/Background.svg'
 import HomeImage from '../../assets/HomeImage.png'
-import { IconTextListItem } from '../../components/HomeListItem'
+import { IconTextListItem } from '../../components/IconTextListItem'
 
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
-import { CoffeeCard } from '../../components/CoffeeCard'
+import { CoffeeCard } from './CoffeeCard'
 import { CoffeeListContext } from '../../contexts/CoffeeList'
 
-export const ProductsList: React.FC = () => {
+export const Home: React.FC = () => {
   const { coffeeList } = useContext(CoffeeListContext)
 
   return (
-    <ProductsPageContainer>
+    <HomeContainer>
       <img src={BackgroundSVG} alt="" />
       <SynopsisSection>
         <div>
@@ -79,6 +75,6 @@ export const ProductsList: React.FC = () => {
           ))}
         </ul>
       </CoffeeListSection>
-    </ProductsPageContainer>
+    </HomeContainer>
   )
 }

@@ -1,7 +1,7 @@
 import { ShoppingCart } from 'phosphor-react'
 import React, { useContext, useState } from 'react'
-import { CartContext } from '../../contexts/Cart'
-import { IconButton } from '../IconButton'
+import { IconButton } from '../../../components/IconButton'
+import { CartContext } from '../../../contexts/Cart'
 import { CoffeeCardContainer, CountContainer } from './styles'
 
 interface CoffeeCardProps {

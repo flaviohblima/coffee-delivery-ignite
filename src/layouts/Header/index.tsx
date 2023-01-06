@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom'
 
 import logoSVG from '../../assets/Logo.svg'
 import { CartContext } from '../../contexts/Cart'
-import { IconButton } from '../IconButton'
-import { NumberIndicator } from '../NumberIndicator'
+import { IconButton } from '../../components/IconButton'
+import { NumberIndicator } from '../../components/NumberIndicator'
 import { HeaderContainer } from './styles'
 
 export const Header: React.FC = () => {
