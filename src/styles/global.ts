@@ -11,6 +11,10 @@ export const GlobalStyle = createGlobalStyle`
     outline: 0;
   }
 
+  html, body, #root {
+    height: 100vh;
+  }
+
   body {
     background: ${(props) => props.theme.white};
     color: ${(props) => props.theme['base-text']};
