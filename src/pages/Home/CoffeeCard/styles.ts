@@ -50,13 +50,13 @@ export const CoffeeCardContainer = styled.li`
 
   p {
     text-align: center;
-    margin-bottom: 2rem;
     font-size: 0.875rem;
 
     color: ${(props) => props.theme['base-label']};
   }
 
   & > div {
+    margin-top: 2rem;
     padding: 0 0.25rem;
     width: 100%;
     display: flex;

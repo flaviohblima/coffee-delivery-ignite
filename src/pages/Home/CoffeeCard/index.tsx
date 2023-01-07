@@ -1,8 +1,9 @@
 import { ShoppingCart } from 'phosphor-react'
 import React, { useContext, useState } from 'react'
+import { CoffeeCounter } from '../../../components/CoffeeCounter'
 import { IconButton } from '../../../components/IconButton'
 import { CartContext } from '../../../contexts/Cart'
-import { CoffeeCardContainer, CountContainer } from './styles'
+import { CoffeeCardContainer } from './styles'
 
 interface CoffeeCardProps {
   type: string
@@ -26,7 +27,7 @@ export const CoffeeCard: React.FC<CoffeeCardProps> = ({
   const [quantity, setQuantity] = useState(0)
 
   const handleAddCoffeeToCard = () => {
-    addCoffeeToCart(type, quantity)
+    addCoffeeToCart({ type, cost, image, name, quantity })
     setQuantity(0)
   }
 
@@ -58,11 +59,11 @@ export const CoffeeCard: React.FC<CoffeeCardProps> = ({
         </span>
 
         <div>
-          <CountContainer>
-            <button onClick={handleSubtractOneCoffee}>-</button>
-            <p>{quantity}</p>
-            <button onClick={handleSumOneCoffee}>+</button>
-          </CountContainer>
+          <CoffeeCounter
+            onSubtract={handleSubtractOneCoffee}
+            onSum={handleSumOneCoffee}
+            value={quantity}
+          />
           <IconButton
             variant="secondary"
             icon={<ShoppingCart size={22} weight="fill" />}
