@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { ButtonHTMLAttributes } from 'react'
 import { ButtonContainer } from './styles'
 
-interface ButtonProps {
-  label: string
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  text: string
 }
 
-export const Button: React.FC<ButtonProps> = ({ label }) => {
-  return <ButtonContainer>{label.toUpperCase()}</ButtonContainer>
+export const Button: React.FC<ButtonProps> = ({ text, ...rest }) => {
+  return <ButtonContainer {...rest}>{text.toUpperCase()}</ButtonContainer>
 }

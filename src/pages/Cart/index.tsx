@@ -5,21 +5,63 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTheme } from 'styled-components'
 import { PaymentRadioButton } from '../../components/PaymentRadioButton'
 import { BaseInput } from './BaseInput'
-import { CartContainer, FieldGroup, PaymentMethodContainer } from './styles'
-import { Summary } from './Summary'
+import {
+  CartForm,
+  FieldGroup,
+  PaymentMethodContainer,
+  SummaryContainer,
+} from './styles'
+
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as zod from 'zod'
+import { CartContext } from '../../contexts/Cart'
+import { CoffeeInCart } from './CoffeeInCart'
+import { formatMoney } from '../../utils/formatMoney'
+import { Button } from '../../components/Button'
+
+const newTransactionFormValidationSchema = zod.object({
+  zipCode: zod.string(),
+  address: zod.string(),
+  number: zod.string(),
+  additionalInfo: zod.string(),
+  neighborhood: zod.string(),
+  city: zod.string(),
+  state: zod.string(),
+  paymentMethod: zod.string(),
+})
 
 export const Cart: React.FC = () => {
   const theme = useTheme()
+  const { coffees } = useContext(CartContext)
+
+  const coffeeTotal = coffees.reduce((sum, coffee) => {
+    return sum + coffee.quantity * coffee.cost
+  }, 0)
+
+  const deliveryCost = 3.5
+
+  const totalPrice = coffeeTotal + deliveryCost
+
+  const { register, handleSubmit, formState } = useForm({
+    resolver: zodResolver(newTransactionFormValidationSchema),
+  })
+
+  const handleCreateNewTransaction = (data: any) => {
+    console.log('data', data)
+    console.log('formState', formState)
+  }
+
   return (
-    <CartContainer>
+    <CartForm onSubmit={handleSubmit(handleCreateNewTransaction)} action="">
       <section>
         <h2>Complete seu pedido</h2>
 
-        <form>
+        <div>
           <header>
             <MapPinLine size={22} color={theme['yellow-dark']} />
             <div>
@@ -28,59 +70,64 @@ export const Cart: React.FC = () => {
             </div>
           </header>
 
-          <BaseInput id="cep" name="cep" type="text" placeholder="CEP" />
           <BaseInput
-            id="rua"
-            name="rua"
+            id="zipCode"
+            type="text"
+            placeholder="CEP"
+            {...register('zipCode')}
+          />
+          <BaseInput
+            id="address"
             type="text"
             placeholder="Rua"
+            {...register('address')}
             fullwidth
           />
 
           <FieldGroup>
             <BaseInput
-              id="numero"
-              name="numero"
+              id="number"
               type="text"
               placeholder="Número"
+              {...register('number')}
             />
             <BaseInput
-              id="complemento"
-              name="complemento"
+              id="additionalInfo"
               type="text"
               placeholder="Complemento"
               fullwidth
               flexgrow
               optional
+              {...register('additionalInfo')}
             />
           </FieldGroup>
 
           <FieldGroup>
             <BaseInput
-              id="bairro"
-              name="bairro"
+              id="neighborhood"
               type="text"
               placeholder="Bairro"
               flexgrow
+              {...register('neighborhood')}
             />
             <BaseInput
-              id="cidade"
-              name="cidade"
+              id="city"
               type="text"
               placeholder="Cidade"
               flexgrow
+              {...register('city')}
             />
             <BaseInput
-              id="uf"
-              name="uf"
+              id="state"
               type="text"
               placeholder="UF"
               flexgrow
+              {...register('state')}
             />
           </FieldGroup>
-        </form>
+        </div>
 
-        <form>
+        <div>
           <header>
             <CurrencyDollar size={22} color={theme.purple} />
             <div>
@@ -93,32 +140,58 @@ export const Cart: React.FC = () => {
 
           <PaymentMethodContainer>
             <PaymentRadioButton
-              name="payment-method"
+              {...register('paymentMethod')}
               id="credit-card"
               icon={<CreditCard size={22} />}
               label="Cartão de crédito"
+              value="Cartão de crédito"
             />
             <PaymentRadioButton
-              name="payment-method"
+              {...register('paymentMethod')}
               id="debit-card"
               icon={<Bank size={22} />}
               label="Cartão de débito"
+              value="Cartão de débito"
             />
             <PaymentRadioButton
-              name="payment-method"
+              {...register('paymentMethod')}
               id="money"
               icon={<Money size={22} />}
               label="Dinheiro"
+              value="Dinheiro"
             />
           </PaymentMethodContainer>
-        </form>
+        </div>
       </section>
 
       <section>
         <h2>Cafés selecionados</h2>
 
-        <Summary />
+        <SummaryContainer>
+          <ul>
+            {coffees.map((coffee) => (
+              <CoffeeInCart key={coffee.type} {...coffee} />
+            ))}
+          </ul>
+
+          <footer>
+            <div>
+              <p>Total de itens</p>
+              <span>R$ {formatMoney(coffeeTotal)}</span>
+            </div>
+            <div>
+              <p>Entrega</p>
+              <span>R$ {formatMoney(deliveryCost)}</span>
+            </div>
+            <div>
+              <strong>Total</strong>
+              <strong>R$ {formatMoney(totalPrice)}</strong>
+            </div>
+
+            <Button type="submit" text={'Confirmar Pedido'} />
+          </footer>
+        </SummaryContainer>
       </section>
-    </CartContainer>
+    </CartForm>
   )
 }

@@ -7,22 +7,20 @@ interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
   optional?: boolean
 }
 
-export const BaseInput: React.FC<BaseInputProps> = ({
-  fullwidth,
-  flexgrow,
-  optional,
-  ...rest
-}) => {
-  return (
-    <InputContainer
-      fullwidth={fullwidth}
-      flexgrow={flexgrow}
-      optional={optional}
-      htmlFor={rest.name}
-    >
-      <input {...rest} />
+// eslint-disable-next-line react/display-name
+export const BaseInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
+  ({ fullwidth, flexgrow, optional, ...rest }, ref) => {
+    return (
+      <InputContainer
+        fullwidth={fullwidth}
+        flexgrow={flexgrow}
+        optional={optional}
+        htmlFor={rest.id}
+      >
+        <input ref={ref} {...rest} />
 
-      {optional ? <span>Opcional</span> : null}
-    </InputContainer>
-  )
-}
+        {optional ? <span>Opcional</span> : null}
+      </InputContainer>
+    )
+  },
+)

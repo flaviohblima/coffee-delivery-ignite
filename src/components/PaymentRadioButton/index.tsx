@@ -1,22 +1,22 @@
-import React, { ReactNode } from 'react'
+import React, { InputHTMLAttributes, ReactNode } from 'react'
 import { PaymentRadioButtonContainer } from './styles'
 
-interface PaymentRadioButtonProps {
+interface PaymentRadioButtonProps
+  extends InputHTMLAttributes<HTMLInputElement> {
   id: string
   icon: ReactNode
   label: string
   name: string
 }
 
-export const PaymentRadioButton: React.FC<PaymentRadioButtonProps> = ({
-  id,
-  icon,
-  label,
-  name,
-}) => {
+// eslint-disable-next-line react/display-name
+export const PaymentRadioButton = React.forwardRef<
+  HTMLInputElement,
+  PaymentRadioButtonProps
+>(({ id, icon, label, ...rest }, ref) => {
   return (
     <PaymentRadioButtonContainer>
-      <input type="radio" id={id} name={name} />
+      <input type="radio" id={id} {...rest} ref={ref} />
 
       <label htmlFor={id}>
         {icon}
@@ -24,4 +24,4 @@ export const PaymentRadioButton: React.FC<PaymentRadioButtonProps> = ({
       </label>
     </PaymentRadioButtonContainer>
   )
-}
+})
