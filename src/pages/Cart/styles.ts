@@ -29,6 +29,7 @@ export const CartContainer = styled.main`
     }
 
     form {
+      width: 100%;
       padding: 2.5rem;
       border-radius: 0.375rem;
       background: ${(props) => props.theme['base-card']};

@@ -8,6 +8,7 @@ import {
 import React from 'react'
 import { useTheme } from 'styled-components'
 import { PaymentRadioButton } from '../../components/PaymentRadioButton'
+import { BaseInput } from './BaseInput'
 import { CartContainer, FieldGroup, PaymentMethodContainer } from './styles'
 import { Summary } from './Summary'
 
@@ -27,17 +28,55 @@ export const Cart: React.FC = () => {
             </div>
           </header>
 
-          <input type="text" placeholder="CEP" />
-          <input type="text" placeholder="Rua" />
+          <BaseInput id="cep" name="cep" type="text" placeholder="CEP" />
+          <BaseInput
+            id="rua"
+            name="rua"
+            type="text"
+            placeholder="Rua"
+            fullwidth
+          />
+
           <FieldGroup>
-            <input type="text" placeholder="Número" />
-            <input type="text" placeholder="Complemento" />
+            <BaseInput
+              id="numero"
+              name="numero"
+              type="text"
+              placeholder="Número"
+            />
+            <BaseInput
+              id="complemento"
+              name="complemento"
+              type="text"
+              placeholder="Complemento"
+              fullwidth
+              flexgrow
+              optional
+            />
           </FieldGroup>
 
           <FieldGroup>
-            <input type="text" placeholder="Bairro" />
-            <input type="text" placeholder="Cidade" />
-            <input type="text" placeholder="UF" />
+            <BaseInput
+              id="bairro"
+              name="bairro"
+              type="text"
+              placeholder="Bairro"
+              flexgrow
+            />
+            <BaseInput
+              id="cidade"
+              name="cidade"
+              type="text"
+              placeholder="Cidade"
+              flexgrow
+            />
+            <BaseInput
+              id="uf"
+              name="uf"
+              type="text"
+              placeholder="UF"
+              flexgrow
+            />
           </FieldGroup>
         </form>
 
