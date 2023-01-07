@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Button } from '../../../components/Button'
 import { CartContext } from '../../../contexts/Cart'
+import { formatMoney } from '../../../utils/formatMoney'
 import { CoffeeInCart } from '../CoffeeInCart'
 import { SummaryContainer } from './styles'
 
@@ -26,15 +27,15 @@ export const Summary: React.FC = () => {
       <footer>
         <div>
           <p>Total de itens</p>
-          <span>R$ {coffeeTotal}</span>
+          <span>R$ {formatMoney(coffeeTotal)}</span>
         </div>
         <div>
           <p>Entrega</p>
-          <span>R$ {deliveryCost}</span>
+          <span>R$ {formatMoney(deliveryCost)}</span>
         </div>
         <div>
           <strong>Total</strong>
-          <strong>R$ {totalPrice}</strong>
+          <strong>R$ {formatMoney(totalPrice)}</strong>
         </div>
 
         <Button label={'Confirmar Pedido'} />

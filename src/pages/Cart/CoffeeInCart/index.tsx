@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { CoffeeCounter } from '../../../components/CoffeeCounter'
 import { IconButton } from '../../../components/IconButton'
 import { CartContext } from '../../../contexts/Cart'
+import { formatMoney } from '../../../utils/formatMoney'
 import { CoffeeActions, CoffeeInCartContainer } from './styles'
 
 interface CoffeeInCartProps {
@@ -59,7 +60,7 @@ export const CoffeeInCart: React.FC<CoffeeInCartProps> = ({
           </CoffeeActions>
         </div>
 
-        <strong>R$ {cost * quantity}</strong>
+        <strong>R$ {formatMoney(cost * quantity)}</strong>
       </div>
 
       <hr />
