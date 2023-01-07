@@ -2,12 +2,15 @@ import React, { createContext, ReactNode, useState } from 'react'
 
 interface Coffee {
   type: string
+  name: string
+  image: string
+  cost: number
   quantity: number
 }
 
 interface ICartContext {
   coffees: Coffee[]
-  addCoffeeToCart: (type: string, quantity: number) => void
+  addCoffeeToCart: (coffee: Coffee) => void
 }
 
 interface CartContextProviderProps {
@@ -21,13 +24,13 @@ export const CartContextProvider: React.FC<CartContextProviderProps> = ({
 }) => {
   const [coffees, setCoffees] = useState<Coffee[]>([])
 
-  const addCoffeeToCart = (type: string, quantity: number) => {
-    if (!quantity) {
+  const addCoffeeToCart = (coffee: Coffee) => {
+    if (!coffee.quantity) {
       return
     }
 
     setCoffees((oldCoffees) => {
-      const coffeeList: Coffee[] = [...oldCoffees, { type, quantity }]
+      const coffeeList: Coffee[] = [...oldCoffees, coffee]
       return coffeeList.reduce((reducedCoffees, coffee) => {
         const prevIndex = reducedCoffees.findIndex(
           (prevCoffee) => prevCoffee.type === coffee.type,

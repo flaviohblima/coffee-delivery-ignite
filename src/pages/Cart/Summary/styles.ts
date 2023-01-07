@@ -9,10 +9,9 @@ export const SummaryContainer = styled.div`
   padding: 2.5rem;
   border-radius: 0.375rem 2.75rem;
 
-  ul {
-    li {
-      list-style-type: none;
-      margin-bottom: 1px solid ${(props) => props.theme['base-button']};
-    }
+  footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 `

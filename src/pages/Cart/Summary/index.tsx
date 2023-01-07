@@ -1,25 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from '../../../components/Button'
+import { CartContext } from '../../../contexts/Cart'
+import { CoffeeInCart } from '../CoffeeInCart'
 import { SummaryContainer } from './styles'
 
 export const Summary: React.FC = () => {
+  const { coffees } = useContext(CartContext)
   return (
     <SummaryContainer>
       <ul>
-        <>
-          <li>
-            <img src="" alt="" />
-            <p>café 1</p>
-          </li>
-          <hr />
-        </>
-        <>
-          <li>
-            <img src="" alt="" />
-            <p>café 2</p>
-          </li>
-          <hr />
-        </>
+        {coffees.map((coffee) => (
+          <CoffeeInCart key={coffee.type} {...coffee} />
+        ))}
       </ul>
 
       <footer>

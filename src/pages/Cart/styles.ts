@@ -2,15 +2,21 @@ import styled from 'styled-components'
 
 export const CartContainer = styled.main`
   flex: 1;
+  width: 100%;
   background: ${(props) => props.theme.background};
 
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  grid-column-gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  @media (min-width: 800px) {
+    flex-direction: row;
+  }
 
   padding: 2.5rem 10rem;
 
   section {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -55,6 +61,7 @@ export const CartContainer = styled.main`
         border: none;
         display: flex;
         align-items: center;
+        /* flex-wrap: wrap; */
         gap: 0.75rem;
         font-size: 0.75rem;
       }
