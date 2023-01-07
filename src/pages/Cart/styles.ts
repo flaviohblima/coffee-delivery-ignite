@@ -8,12 +8,12 @@ export const CartContainer = styled.main`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding: 2.5rem 2.5rem;
 
-  @media (min-width: 800px) {
+  @media (min-width: 1024px) {
     flex-direction: row;
+    padding: 2.5rem 10rem;
   }
-
-  padding: 2.5rem 10rem;
 
   section {
     flex: 1;
@@ -28,7 +28,7 @@ export const CartContainer = styled.main`
       color: ${(props) => props.theme['base-subtitle']};
     }
 
-    & > form {
+    form {
       padding: 2.5rem;
       border-radius: 0.375rem;
       background: ${(props) => props.theme['base-card']};
@@ -54,17 +54,24 @@ export const CartContainer = styled.main`
           color: ${(props) => props.theme['base-text']};
         }
       }
-
-      fieldset,
-      ul {
-        width: 100%;
-        border: none;
-        display: flex;
-        align-items: center;
-        /* flex-wrap: wrap; */
-        gap: 0.75rem;
-        font-size: 0.75rem;
-      }
     }
   }
+`
+
+export const FieldGroup = styled.fieldset`
+  width: 100%;
+  border: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+`
+
+export const PaymentMethodContainer = styled.ul`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 `

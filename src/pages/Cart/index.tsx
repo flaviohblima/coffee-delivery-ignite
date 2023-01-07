@@ -8,7 +8,7 @@ import {
 import React from 'react'
 import { useTheme } from 'styled-components'
 import { PaymentRadioButton } from '../../components/PaymentRadioButton'
-import { CartContainer } from './styles'
+import { CartContainer, FieldGroup, PaymentMethodContainer } from './styles'
 import { Summary } from './Summary'
 
 export const Cart: React.FC = () => {
@@ -29,16 +29,16 @@ export const Cart: React.FC = () => {
 
           <input type="text" placeholder="CEP" />
           <input type="text" placeholder="Rua" />
-          <fieldset>
+          <FieldGroup>
             <input type="text" placeholder="Número" />
             <input type="text" placeholder="Complemento" />
-          </fieldset>
+          </FieldGroup>
 
-          <fieldset>
+          <FieldGroup>
             <input type="text" placeholder="Bairro" />
             <input type="text" placeholder="Cidade" />
             <input type="text" placeholder="UF" />
-          </fieldset>
+          </FieldGroup>
         </form>
 
         <form>
@@ -52,7 +52,7 @@ export const Cart: React.FC = () => {
             </div>
           </header>
 
-          <ul>
+          <PaymentMethodContainer>
             <PaymentRadioButton
               name="payment-method"
               id="credit-card"
@@ -71,7 +71,7 @@ export const Cart: React.FC = () => {
               icon={<Money size={22} />}
               label="Dinheiro"
             />
-          </ul>
+          </PaymentMethodContainer>
         </form>
       </section>
 

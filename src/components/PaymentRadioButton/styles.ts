@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const PaymentRadioButtonContainer = styled.li`
   list-style-type: none;
   flex: 1;
+  font-size: 0.75rem;
 
   input[type='radio'] {
     visibility: hidden;
