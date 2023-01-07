@@ -3,7 +3,13 @@ import React, { useContext, useState } from 'react'
 import { CoffeeCounter } from '../../../components/CoffeeCounter'
 import { IconButton } from '../../../components/IconButton'
 import { CartContext } from '../../../contexts/Cart'
-import { CoffeeCardContainer } from './styles'
+import {
+  ActionsContainer,
+  CoffeeCardContainer,
+  CoffeeDescription,
+  CoffeeName,
+  PriceContainer,
+} from './styles'
 
 interface CoffeeCardProps {
   type: string
@@ -43,22 +49,22 @@ export const CoffeeCard: React.FC<CoffeeCardProps> = ({
       <ul>
         {tags.map((tag) => (
           <li id={tag} key={tag}>
-            {tag.toUpperCase()}
+            <p>{tag.toUpperCase()}</p>
           </li>
         ))}
       </ul>
 
-      <strong>{name}</strong>
+      <CoffeeName>{name}</CoffeeName>
 
-      <p>{description}</p>
+      <CoffeeDescription>{description}</CoffeeDescription>
 
-      <div>
-        <span>
-          R$
+      <footer>
+        <PriceContainer>
+          <span>R$</span>
           <strong>{cost}</strong>
-        </span>
+        </PriceContainer>
 
-        <div>
+        <ActionsContainer>
           <CoffeeCounter
             onSubtract={handleSubtractOneCoffee}
             onSum={handleSumOneCoffee}
@@ -69,8 +75,8 @@ export const CoffeeCard: React.FC<CoffeeCardProps> = ({
             icon={<ShoppingCart size={22} weight="fill" />}
             onClick={handleAddCoffeeToCard}
           />
-        </div>
-      </div>
+        </ActionsContainer>
+      </footer>
     </CoffeeCardContainer>
   )
 }

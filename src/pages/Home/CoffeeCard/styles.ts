@@ -29,94 +29,65 @@ export const CoffeeCardContainer = styled.li`
       list-style-type: none;
       background: ${(props) => props.theme['yellow-light']};
       color: ${(props) => props.theme['yellow-dark']};
-      padding: 0 0.5rem;
+      padding: 0.25rem 0.5rem;
       border-radius: 6.25rem;
-      margin: 0;
+      margin-bottom: 0;
 
-      font-size: 0.625rem;
-      font-weight: 700;
+      p {
+        font-size: 0.625rem;
+        font-weight: 700;
+        line-height: 130%;
+      }
     }
   }
 
-  strong {
-    font-family: 'Baloo 2';
-    font-size: 1.25rem;
-    line-height: 130%;
-    font-weight: 700;
-    color: ${(props) => props.theme['base-subtitle']};
-
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    text-align: center;
-    font-size: 0.875rem;
-
-    color: ${(props) => props.theme['base-label']};
-  }
-
-  & > div {
+  footer {
     margin-top: 2rem;
     padding: 0 0.25rem;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    span {
-      display: flex;
-      align-items: flex-end;
-      gap: 0.25rem;
-
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: ${(props) => props.theme['base-text']};
-
-      strong {
-        font-size: 1.5rem;
-        margin-bottom: -0.125rem;
-        color: ${(props) => props.theme['base-text']};
-      }
-    }
-
-    & > div {
-      width: auto;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
   }
 `
 
-export const CountContainer = styled.div`
-  height: 2.625rem;
-  padding: 0.125rem 0.5rem;
-  border-radius: 0.625rem;
+export const CoffeeName = styled.strong`
+  font-family: 'Baloo 2';
+  font-size: 1.25rem;
+  line-height: 130%;
+  font-weight: 700;
+  color: ${(props) => props.theme['base-subtitle']};
 
-  background: ${(props) => props.theme['base-button']};
+  margin-bottom: 0.5rem;
+`
 
+export const CoffeeDescription = styled.p`
+  text-align: center;
+  font-size: 0.875rem;
+
+  color: ${(props) => props.theme['base-label']};
+`
+
+export const PriceContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.25rem;
 
-  p {
-    margin-bottom: -0.125rem;
-    font-size: 1rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: ${(props) => props.theme['base-text']};
+
+  strong {
+    font-family: 'Baloo 2';
+    font-size: 1.5rem;
+    margin-bottom: 0.125rem;
     color: ${(props) => props.theme['base-text']};
   }
+`
 
-  button {
-    height: 1.25rem;
-    width: 1.25rem;
-    border: none;
-    background: transparent;
-    color: ${(props) => props.theme.purple};
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-
-    &:hover {
-      color: ${(props) => props.theme['purple-dark']};
-    }
-  }
+export const ActionsContainer = styled.div`
+  width: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `
