@@ -1,10 +1,12 @@
 import { Trash } from 'phosphor-react'
-import React from 'react'
+import React, { useContext } from 'react'
 import { CoffeeCounter } from '../../../components/CoffeeCounter'
 import { IconButton } from '../../../components/IconButton'
+import { CartContext } from '../../../contexts/Cart'
 import { CoffeeActions, CoffeeInCartContainer } from './styles'
 
 interface CoffeeInCartProps {
+  type: string
   name: string
   image: string
   cost: number
@@ -12,12 +14,25 @@ interface CoffeeInCartProps {
 }
 
 export const CoffeeInCart: React.FC<CoffeeInCartProps> = ({
+  type,
   name,
   image,
   cost,
   quantity,
 }) => {
-  // const { addCoffeeToCart } = useContext(CartContext)
+  const { sumOneCoffee, subtractOneCoffee, removeCoffeeFromCart } =
+    useContext(CartContext)
+
+  const handleSumOneCoffee = () => {
+    sumOneCoffee({ type, name, image, cost, quantity })
+  }
+  const handleSubtractOneCoffee = () => {
+    subtractOneCoffee({ type, name, image, cost, quantity })
+  }
+
+  const handleRemoveCoffeeFromCart = () => {
+    removeCoffeeFromCart({ type, name, image, cost, quantity })
+  }
 
   return (
     <CoffeeInCartContainer>
@@ -30,12 +45,8 @@ export const CoffeeInCart: React.FC<CoffeeInCartProps> = ({
           <CoffeeActions>
             <CoffeeCounter
               size="small"
-              onSubtract={() => {
-                // do nithin
-              }}
-              onSum={() => {
-                // do nithin
-              }}
+              onSubtract={handleSubtractOneCoffee}
+              onSum={handleSumOneCoffee}
               value={quantity}
             />
 
@@ -43,11 +54,12 @@ export const CoffeeInCart: React.FC<CoffeeInCartProps> = ({
               size="small"
               icon={<Trash size={16} />}
               text="REMOVER"
+              onClick={handleRemoveCoffeeFromCart}
             />
           </CoffeeActions>
         </div>
 
-        <strong>R$ {cost}</strong>
+        <strong>R$ {cost * quantity}</strong>
       </div>
 
       <hr />

@@ -6,6 +6,15 @@ import { SummaryContainer } from './styles'
 
 export const Summary: React.FC = () => {
   const { coffees } = useContext(CartContext)
+
+  const coffeeTotal = coffees.reduce((sum, coffee) => {
+    return sum + coffee.quantity * coffee.cost
+  }, 0)
+
+  const deliveryCost = 3.5
+
+  const totalPrice = coffeeTotal + deliveryCost
+
   return (
     <SummaryContainer>
       <ul>
@@ -17,15 +26,15 @@ export const Summary: React.FC = () => {
       <footer>
         <div>
           <p>Total de itens</p>
-          <span>R$ {29}</span>
+          <span>R$ {coffeeTotal}</span>
         </div>
         <div>
           <p>Entrega</p>
-          <span>R$ {3.5}</span>
+          <span>R$ {deliveryCost}</span>
         </div>
         <div>
           <strong>Total</strong>
-          <strong>R$ {32.5}</strong>
+          <strong>R$ {totalPrice}</strong>
         </div>
 
         <Button label={'Confirmar Pedido'} />
