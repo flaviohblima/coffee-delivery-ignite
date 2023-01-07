@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+export type IconButtonSize = 'small' | 'medium'
+
 export type IconButtonVariant =
   | 'primary'
   | 'secondary'
@@ -8,6 +10,7 @@ export type IconButtonVariant =
 
 interface IconButtonContainerProps {
   variant: IconButtonVariant
+  size: IconButtonSize
 }
 
 const buttonColors = {
@@ -55,17 +58,30 @@ const buttonColorsHover = {
   },
   default: {
     background: 'base-hover',
-    border: 'base-subtitle',
+    border: 'base-hover',
     color: 'base-subtitle',
     iconColor: 'purple-dark',
   },
 } as const
 
+const iconButtonSizes = {
+  small: '2rem',
+  medium: '2.375rem',
+} as const
+
+const fontSizes = {
+  small: '0.75rem',
+  medium: '0.875rem',
+} as const
+
 export const IconButtonContainer = styled.button<IconButtonContainerProps>`
-  height: 2.375rem;
+  height: ${(props) => iconButtonSizes[props.size]};
   border: none;
   border-radius: 0.375rem;
   padding: 0.5rem;
+
+  font-size: ${(props) => fontSizes[props.size]};
+  line-height: 160%;
 
   display: flex;
   align-items: center;
