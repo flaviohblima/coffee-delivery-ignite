@@ -15,6 +15,10 @@ export const CartForm = styled.form`
     padding: 2.5rem 10rem;
   }
 
+  section + section {
+    flex: 0 1 28rem;
+  }
+
   section {
     flex: 1;
     display: flex;
@@ -78,6 +82,7 @@ export const PaymentMethodContainer = styled.ul`
 `
 
 export const SummaryContainer = styled.div`
+  width: 28rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -85,6 +90,10 @@ export const SummaryContainer = styled.div`
   background: ${(props) => props.theme['base-card']};
   padding: 2.5rem;
   border-radius: 0.375rem 2.75rem;
+
+  ul {
+    width: 100%;
+  }
 
   footer {
     width: 100%;

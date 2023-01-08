@@ -142,21 +142,21 @@ export const Cart: React.FC = () => {
             <PaymentRadioButton
               {...register('paymentMethod')}
               id="credit-card"
-              icon={<CreditCard size={22} />}
+              icon={<CreditCard size={16} />}
               label="Cartão de crédito"
               value="Cartão de crédito"
             />
             <PaymentRadioButton
               {...register('paymentMethod')}
               id="debit-card"
-              icon={<Bank size={22} />}
+              icon={<Bank size={16} />}
               label="Cartão de débito"
               value="Cartão de débito"
             />
             <PaymentRadioButton
               {...register('paymentMethod')}
               id="money"
-              icon={<Money size={22} />}
+              icon={<Money size={16} />}
               label="Dinheiro"
               value="Dinheiro"
             />
