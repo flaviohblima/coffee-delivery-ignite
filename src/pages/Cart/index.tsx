@@ -23,6 +23,8 @@ import { CartContext } from '../../contexts/Cart'
 import { CoffeeInCart } from './CoffeeInCart'
 import { formatMoney } from '../../utils/formatMoney'
 import { Button } from '../../components/Button'
+import { useNavigate } from 'react-router-dom'
+import { DeliveryInfoContext } from '../../contexts/DeliveryInfo'
 
 const newTransactionFormValidationSchema = zod.object({
   zipCode: zod.string(),
@@ -38,6 +40,8 @@ const newTransactionFormValidationSchema = zod.object({
 export const Cart: React.FC = () => {
   const theme = useTheme()
   const { coffees } = useContext(CartContext)
+  const { setDeliveryInfo } = useContext(DeliveryInfoContext)
+  const navigate = useNavigate()
 
   const coffeeTotal = coffees.reduce((sum, coffee) => {
     return sum + coffee.quantity * coffee.cost
@@ -54,6 +58,9 @@ export const Cart: React.FC = () => {
   const handleCreateNewTransaction = (data: any) => {
     console.log('data', data)
     console.log('formState', formState)
+
+    setDeliveryInfo(data)
+    navigate('/delivery')
   }
 
   return (
