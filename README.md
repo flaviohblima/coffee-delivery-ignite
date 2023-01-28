@@ -12,14 +12,15 @@
 2. Add a specific amount of items in the cart
 3. Increase/Descrease the amount of itens from cart
 4. Use a form to fill address information
+  1. Validate that the user filled obrigatory address fields and warn if not
 5. Exhibit the total cart items in the app Header
 6. Show user the total price of the purchase
 
 ## Other Features
 1. Maintain the items selected in the local storage
 2. Get the address from an API based on post code (CEP in Brazil)
-3. Validate that the user filled obrigatory address fields and warn if not
-4. Recognize the user location based on his IP address
+3. Ask users for their zipCode to set up city/uf at the app Header
+
 
 ## Running the project
 - To run this project, first clone it using this git command:

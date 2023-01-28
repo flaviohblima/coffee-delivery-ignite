@@ -33,22 +33,27 @@ const newTransactionFormValidationSchema = zod.object({
   additionalInfo: zod.string(),
   neighborhood: zod.string(),
   city: zod.string(),
-  state: zod.string(),
+  uf: zod.string(),
   paymentMethod: zod.string(),
 })
 
 export const Cart: React.FC = () => {
   const theme = useTheme()
-  const { setDeliveryInfo } = useContext(DeliveryInfoContext)
+  const { deliveryInfo, setDeliveryInfo, searchForZipCode } =
+    useContext(DeliveryInfoContext)
   const navigate = useNavigate()
-
   const { coffees } = useContext(CartContext)
+
   const isThereACoffeeInTheCart = !!coffees.length
   const coffeeTotal = coffees.reduce((sum, coffee) => {
     return sum + coffee.quantity * coffee.cost
   }, 0)
   const deliveryCost = 3.5
   const totalPrice = coffeeTotal + deliveryCost
+
+  const initalValues = {
+    ...deliveryInfo,
+  }
 
   const { register, handleSubmit, formState, watch, setValue } = useForm({
     resolver: zodResolver(newTransactionFormValidationSchema),
@@ -63,24 +68,18 @@ export const Cart: React.FC = () => {
   }
 
   const zipCode = watch('zipCode')
-  const handleAutoFillByZipCode = useCallback(() => {
+  const handleAutoFillByZipCode = useCallback(async () => {
     if (!zipCode) {
       return
     }
 
-    const zipCodeNumber = zipCode.replace(/^\D+/g, '')
-
-    fetch(`https://viacep.com.br/ws/${zipCodeNumber}/json`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('data', data)
-        setValue('address', data.logradouro)
-        setValue('neighborhood', data.bairro)
-        setValue('city', data.localidade)
-        setValue('state', data.uf)
-        setValue('number', '')
-      })
-  }, [zipCode, setValue])
+    const data = await searchForZipCode(zipCode)
+    setValue('address', data.street)
+    setValue('neighborhood', data.neighborhood)
+    setValue('city', data.city)
+    setValue('uf', data.state)
+    setValue('number', '')
+  }, [zipCode, setValue, searchForZipCode])
 
   useEffect(() => {
     handleAutoFillByZipCode()
@@ -104,12 +103,14 @@ export const Cart: React.FC = () => {
             id="zipCode"
             type="text"
             placeholder="CEP"
+            defaultValue={initalValues.zipCode}
             {...register('zipCode')}
           />
           <BaseInput
             id="address"
             type="text"
             placeholder="Rua"
+            defaultValue={initalValues.address}
             {...register('address')}
             fullwidth
           />
@@ -119,6 +120,7 @@ export const Cart: React.FC = () => {
               id="number"
               type="text"
               placeholder="Número"
+              defaultValue={initalValues.number}
               {...register('number')}
             />
             <BaseInput
@@ -128,6 +130,7 @@ export const Cart: React.FC = () => {
               fullwidth
               flexgrow
               optional
+              defaultValue={initalValues.additionalInfo}
               {...register('additionalInfo')}
             />
           </FieldGroup>
@@ -138,6 +141,7 @@ export const Cart: React.FC = () => {
               type="text"
               placeholder="Bairro"
               flexgrow
+              defaultValue={initalValues.neighborhood}
               {...register('neighborhood')}
             />
             <BaseInput
@@ -145,14 +149,16 @@ export const Cart: React.FC = () => {
               type="text"
               placeholder="Cidade"
               flexgrow
+              defaultValue={initalValues.city}
               {...register('city')}
             />
             <BaseInput
-              id="state"
+              id="uf"
               type="text"
               placeholder="UF"
               flexgrow
-              {...register('state')}
+              defaultValue={initalValues.uf}
+              {...register('uf')}
             />
           </FieldGroup>
         </div>

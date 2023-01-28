@@ -35,7 +35,7 @@ export const Delivery: React.FC = () => {
                   Entrega em{' '}
                   <strong>{`${deliveryInfo?.address}, ${deliveryInfo?.number}`}</strong>
                 </p>
-                <p>{`${deliveryInfo?.city}, ${deliveryInfo?.state}`}</p>
+                <p>{`${deliveryInfo?.city}, ${deliveryInfo?.uf}`}</p>
               </div>
             </li>
             <li>

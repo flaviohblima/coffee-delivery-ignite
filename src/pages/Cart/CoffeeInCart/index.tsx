@@ -52,6 +52,7 @@ export const CoffeeInCart: React.FC<CoffeeInCartProps> = ({
             />
 
             <IconButton
+              type="button"
               size="small"
               icon={<Trash size={16} />}
               text="REMOVER"

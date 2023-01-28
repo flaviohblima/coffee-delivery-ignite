@@ -17,11 +17,11 @@ export const CoffeeCounter: React.FC<CoffeeCounterProps> = ({
 }) => {
   return (
     <CoffeeCountContainer size={size}>
-      <button onClick={onSubtract}>
+      <button type="button" onClick={onSubtract}>
         <Minus size={14} />
       </button>
       <p>{value}</p>
-      <button onClick={onSum}>
+      <button type="button" onClick={onSum}>
         <Plus size={14} />
       </button>
     </CoffeeCountContainer>
