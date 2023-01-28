@@ -5,7 +5,7 @@ interface IDelivery {
   zipCode: string
   address: string
   number: string
-  additionalInfo: string
+  additionalInfo?: string
   neighborhood: string
   city: string
   uf: string

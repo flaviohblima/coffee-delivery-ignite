@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Bank,
   CreditCard,
@@ -6,9 +7,17 @@ import {
   Money,
 } from 'phosphor-react'
 import React, { useCallback, useContext, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { useTheme } from 'styled-components'
+import * as zod from 'zod'
+import { Button } from '../../components/Button'
 import { PaymentRadioButton } from '../../components/PaymentRadioButton'
+import { CartContext } from '../../contexts/Cart'
+import { DeliveryInfoContext } from '../../contexts/DeliveryInfo'
+import { formatMoney } from '../../utils/formatMoney'
 import { BaseInput } from './BaseInput'
+import { CoffeeInCart } from './CoffeeInCart'
 import {
   CartForm,
   FieldGroup,
@@ -16,25 +25,15 @@ import {
   SummaryContainer,
 } from './styles'
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as zod from 'zod'
-import { CartContext } from '../../contexts/Cart'
-import { CoffeeInCart } from './CoffeeInCart'
-import { formatMoney } from '../../utils/formatMoney'
-import { Button } from '../../components/Button'
-import { useNavigate } from 'react-router-dom'
-import { DeliveryInfoContext } from '../../contexts/DeliveryInfo'
-
 const newTransactionFormValidationSchema = zod.object({
-  zipCode: zod.string(),
-  address: zod.string(),
-  number: zod.string(),
-  additionalInfo: zod.string(),
-  neighborhood: zod.string(),
-  city: zod.string(),
-  uf: zod.string(),
-  paymentMethod: zod.string(),
+  zipCode: zod.string().min(1, 'Obrigatório'),
+  address: zod.string().min(1, 'Obrigatório'),
+  number: zod.string().min(1, 'Obrigatório'),
+  additionalInfo: zod.string().optional(),
+  neighborhood: zod.string().min(1, 'Obrigatório'),
+  city: zod.string().min(1, 'Obrigatório'),
+  uf: zod.string().min(1, 'Obrigatório'),
+  paymentMethod: zod.string().min(1, 'Obrigatório'),
 })
 
 export const Cart: React.FC = () => {
@@ -42,7 +41,7 @@ export const Cart: React.FC = () => {
   const { deliveryInfo, setDeliveryInfo, searchForZipCode } =
     useContext(DeliveryInfoContext)
   const navigate = useNavigate()
-  const { coffees } = useContext(CartContext)
+  const { coffees, resetCoffees } = useContext(CartContext)
 
   const isThereACoffeeInTheCart = !!coffees.length
   const coffeeTotal = coffees.reduce((sum, coffee) => {
@@ -51,21 +50,22 @@ export const Cart: React.FC = () => {
   const deliveryCost = 3.5
   const totalPrice = coffeeTotal + deliveryCost
 
-  const initalValues = {
-    ...deliveryInfo,
-  }
+  type ValidationSchema = zod.infer<typeof newTransactionFormValidationSchema>
+  const { register, handleSubmit, watch, setValue } = useForm<ValidationSchema>(
+    {
+      resolver: zodResolver(newTransactionFormValidationSchema),
+      defaultValues: { ...deliveryInfo },
+    },
+  )
 
-  const { register, handleSubmit, formState, watch, setValue } = useForm({
-    resolver: zodResolver(newTransactionFormValidationSchema),
-  })
-
-  const handleCreateNewTransaction = (data: any) => {
-    console.log('data', data)
-    console.log('formState', formState)
-
-    setDeliveryInfo(data)
-    navigate('/delivery')
-  }
+  const handleCreateNewPurchase = useCallback(
+    (data: ValidationSchema) => {
+      setDeliveryInfo(data)
+      resetCoffees()
+      navigate('/delivery')
+    },
+    [navigate, setDeliveryInfo, resetCoffees],
+  )
 
   const zipCode = watch('zipCode')
   const handleAutoFillByZipCode = useCallback(async () => {
@@ -86,7 +86,7 @@ export const Cart: React.FC = () => {
   }, [handleAutoFillByZipCode])
 
   return (
-    <CartForm onSubmit={handleSubmit(handleCreateNewTransaction)} action="">
+    <CartForm onSubmit={handleSubmit(handleCreateNewPurchase)} action="">
       <section>
         <h2>Complete seu pedido</h2>
 
@@ -103,14 +103,12 @@ export const Cart: React.FC = () => {
             id="zipCode"
             type="text"
             placeholder="CEP"
-            defaultValue={initalValues.zipCode}
             {...register('zipCode')}
           />
           <BaseInput
             id="address"
             type="text"
             placeholder="Rua"
-            defaultValue={initalValues.address}
             {...register('address')}
             fullwidth
           />
@@ -120,7 +118,6 @@ export const Cart: React.FC = () => {
               id="number"
               type="text"
               placeholder="Número"
-              defaultValue={initalValues.number}
               {...register('number')}
             />
             <BaseInput
@@ -130,7 +127,6 @@ export const Cart: React.FC = () => {
               fullwidth
               flexgrow
               optional
-              defaultValue={initalValues.additionalInfo}
               {...register('additionalInfo')}
             />
           </FieldGroup>
@@ -141,7 +137,6 @@ export const Cart: React.FC = () => {
               type="text"
               placeholder="Bairro"
               flexgrow
-              defaultValue={initalValues.neighborhood}
               {...register('neighborhood')}
             />
             <BaseInput
@@ -149,7 +144,6 @@ export const Cart: React.FC = () => {
               type="text"
               placeholder="Cidade"
               flexgrow
-              defaultValue={initalValues.city}
               {...register('city')}
             />
             <BaseInput
@@ -157,7 +151,6 @@ export const Cart: React.FC = () => {
               type="text"
               placeholder="UF"
               flexgrow
-              defaultValue={initalValues.uf}
               {...register('uf')}
             />
           </FieldGroup>
@@ -205,9 +198,16 @@ export const Cart: React.FC = () => {
 
         <SummaryContainer>
           <ul>
-            {coffees.map((coffee) => (
-              <CoffeeInCart key={coffee.type} {...coffee} />
-            ))}
+            {coffees.length ? (
+              coffees.map((coffee) => (
+                <CoffeeInCart key={coffee.type} {...coffee} />
+              ))
+            ) : (
+              <>
+                <p>Nenhum café foi selecionado</p>
+                <hr />
+              </>
+            )}
           </ul>
 
           <footer>

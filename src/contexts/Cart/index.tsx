@@ -1,4 +1,10 @@
-import React, { createContext, ReactNode, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 
 interface Coffee {
   type: string
@@ -14,6 +20,7 @@ interface ICartContext {
   sumOneCoffee: (coffee: Coffee) => void
   subtractOneCoffee: (coffee: Coffee) => void
   removeCoffeeFromCart: (coffee: Coffee) => void
+  resetCoffees: () => void
 }
 
 interface CartContextProviderProps {
@@ -102,6 +109,10 @@ export const CartContextProvider: React.FC<CartContextProviderProps> = ({
     })
   }
 
+  const resetCoffees = useCallback(() => {
+    setCoffees([])
+  }, [])
+
   return (
     <CartContext.Provider
       value={{
@@ -110,6 +121,7 @@ export const CartContextProvider: React.FC<CartContextProviderProps> = ({
         sumOneCoffee,
         subtractOneCoffee,
         removeCoffeeFromCart,
+        resetCoffees,
       }}
     >
       {children}
