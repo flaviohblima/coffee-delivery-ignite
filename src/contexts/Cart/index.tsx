@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from 'react'
+import React, { createContext, ReactNode, useEffect, useState } from 'react'
 
 interface Coffee {
   type: string
@@ -25,7 +25,26 @@ export const CartContext = createContext({} as ICartContext)
 export const CartContextProvider: React.FC<CartContextProviderProps> = ({
   children,
 }) => {
-  const [coffees, setCoffees] = useState<Coffee[]>([])
+  const [coffees, setCoffees] = useState<Coffee[]>(() => {
+    const coffeesStoredAsJSON = localStorage.getItem(
+      '@coffee-delivery-ignite:coffees-state-1.0.0',
+    )
+
+    if (coffeesStoredAsJSON) {
+      return JSON.parse(coffeesStoredAsJSON)
+    } else {
+      return []
+    }
+  })
+
+  useEffect(() => {
+    const coffeesJson = JSON.stringify(coffees)
+
+    localStorage.setItem(
+      '@coffee-delivery-ignite:coffees-state-1.0.0',
+      coffeesJson,
+    )
+  }, [coffees])
 
   const addCoffeeToCart = (coffee: Coffee) => {
     if (!coffee.quantity) {
