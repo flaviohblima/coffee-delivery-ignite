@@ -5,7 +5,7 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
-import React, { useContext } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import { useTheme } from 'styled-components'
 import { PaymentRadioButton } from '../../components/PaymentRadioButton'
 import { BaseInput } from './BaseInput'
@@ -39,19 +39,18 @@ const newTransactionFormValidationSchema = zod.object({
 
 export const Cart: React.FC = () => {
   const theme = useTheme()
-  const { coffees } = useContext(CartContext)
   const { setDeliveryInfo } = useContext(DeliveryInfoContext)
   const navigate = useNavigate()
 
+  const { coffees } = useContext(CartContext)
+  const isThereACoffeeInTheCart = !!coffees.length
   const coffeeTotal = coffees.reduce((sum, coffee) => {
     return sum + coffee.quantity * coffee.cost
   }, 0)
-
   const deliveryCost = 3.5
-
   const totalPrice = coffeeTotal + deliveryCost
 
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, watch, setValue } = useForm({
     resolver: zodResolver(newTransactionFormValidationSchema),
   })
 
@@ -62,6 +61,30 @@ export const Cart: React.FC = () => {
     setDeliveryInfo(data)
     navigate('/delivery')
   }
+
+  const zipCode = watch('zipCode')
+  const handleAutoFillByZipCode = useCallback(() => {
+    if (!zipCode) {
+      return
+    }
+
+    const zipCodeNumber = zipCode.replace(/^\D+/g, '')
+
+    fetch(`https://viacep.com.br/ws/${zipCodeNumber}/json`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('data', data)
+        setValue('address', data.logradouro)
+        setValue('neighborhood', data.bairro)
+        setValue('city', data.localidade)
+        setValue('state', data.uf)
+        setValue('number', '')
+      })
+  }, [zipCode, setValue])
+
+  useEffect(() => {
+    handleAutoFillByZipCode()
+  }, [handleAutoFillByZipCode])
 
   return (
     <CartForm onSubmit={handleSubmit(handleCreateNewTransaction)} action="">
@@ -195,7 +218,11 @@ export const Cart: React.FC = () => {
               <strong>R$ {formatMoney(totalPrice)}</strong>
             </div>
 
-            <Button type="submit" text={'Confirmar Pedido'} />
+            <Button
+              type="submit"
+              disabled={!isThereACoffeeInTheCart}
+              text={'Confirmar Pedido'}
+            />
           </footer>
         </SummaryContainer>
       </section>
