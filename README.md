@@ -3,9 +3,9 @@
 ![Coffee Delivery Home Page](app-preview.png)
 
 ## Introduction
-- This project was made as a solution to one of the RockeSeat Ignite course challenges. The project was created using Vite, React, Typescript, Styled Components, Zod (for forms) and Phosphor Icons.
-- The challeng specifications are at [this notion page](https://efficient-sloth-d85.notion.site/Desafio-02-Coffee-Delivery-30e42a21fdb44b09a85244fc2c3dbdf9).
-- The project design was built with figma, and distribuited with [this link](https://www.figma.com/file/5yT9ZzZmRQRS4yivGGB3pl/Coffee-Delivery/duplicate).
+- This project was made as a solution to one of the RockeSeat Ignite course challenges. The project is using Vite, React, Typescript, Styled Components, React Hook Forms + Zod and Phosphor Icons.
+- The challenge specifications are at [this notion page](https://efficient-sloth-d85.notion.site/Desafio-02-Coffee-Delivery-30e42a21fdb44b09a85244fc2c3dbdf9).
+- The project design was built with Figma, and distributed with [this link](https://www.figma.com/file/5yT9ZzZmRQRS4yivGGB3pl/Coffee-Delivery/duplicate).
 
 ## Main Features
 1. List coffees available for purchase
@@ -16,13 +16,13 @@
 5. Exhibit the total cart items in the app Header
 6. Show user the total price of the purchase
 
-## Other Features
+## Extra Features
 1. Maintain the items selected in the local storage
 2. Get the address from an API based on post code (CEP in Brazil)
 3. Ask users for their zipCode to set up city/uf at the app Header
 
 
-## Running the project
+## Project setup
 - To run this project, first clone it using this git command:
 ```sh
 git clone https://github.com/flaviohblima/coffee-delivery-ignite.git
@@ -34,7 +34,9 @@ npm install
 # or
 yarn install
 ```
-- Then, use the `package.json` scripts to:
+
+## Usage
+- See `package.json` scripts:
 ```sh
 # run the application in development mode
 npm run dev
@@ -45,7 +47,7 @@ npm run preview
 # perform linting od the app files, maintaining a pattern of code
 npm run lint
 ```
-- Vite will expose the app in two different paths:
+- Depending on the mode you run the project, Vite will expose the app in different paths:
   - Dev mode: http://127.0.0.1:5173/
   - Preview mode: http://127.0.0.1:4173/
 
